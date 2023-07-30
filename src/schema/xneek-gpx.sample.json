@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "name": "Sample xneek-gpx track",
+    "desc": "Sample xneek-gpx track description",
+    "author": {
+      "name": "Nikolay Fedoseev",
+      "email": "xneek@mail.ru",
+      "link": "https://fednik.ru"
+    },
+    "creator": "xneek",
+    "copyright": "xneek",
+    "link": {
+      "text": "",
+      "type": "",
+      "href": ""
+    },
+    "time": "2023-07-26T03:18:59Z",
+    "keywords": "xneek, gpx",
+    "bounds": [
+      [36.32145, 35.32145],
+      [46.32145, 56.32145]
+    ]
+  },
+  "trk": {
+    "name": "Sample gpx track",
+    "cmt": "Comment for sample gpx track",
+    "desc": "Description for sample gpx track",
+    "trkseg": [
+      {
+        "name": "Sample gpx track segment 1",
+        "cmt": "Comment for sample gpx track segment 1",
+        "desc": "Description for sample gpx track segment 1",
+        "start": "2023-07-26T03:18:59Z",
+        "lat": "abcdefghijklmop",
+        "lon": "abcdefghijklmop",
+        "alt": "abcdefghijklmop",
+        "times": "abcdefghijklmop",
+        "hr": "abcdefghijklmop",
+        "temp": "abcdefghijklmop"
+      },
+      {
+        "name": "Sample gpx track segment 1",
+        "cmt": "Comment for sample gpx track segment 1",
+        "desc": "Description for sample gpx track segment 1",
+        "start": "2023-07-26T03:18:59Z",
+        "lat": "abcdefghijklmop",
+        "lon": "abcdefghijklmop",
+        "alt": "abcdefghijklmop",
+        "times": "abcdefghijklmop",
+        "hr": "abcdefghijklmop",
+        "temp": "abcdefghijklmop"
+      }
+    ]
+  }
+}

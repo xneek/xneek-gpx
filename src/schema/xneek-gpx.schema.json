@@ -1,0 +1,169 @@
+{
+  "$id": "https://example.com/arrays.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "GPX Trackdata",
+  "type": "object",
+  "required": ["trk"],
+  "properties": {
+    "metadata": {
+      "description": "Gpx data metadata",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Gpx data name",
+          "type": "string"
+        },
+        "desc": {
+          "description": "Gpx data description",
+          "type": "string"
+        },
+        "author": {
+          "type": "object",
+          "description": "Gpx data Author information",
+          "properties": {
+            "name": {
+              "description": "Author name",
+              "type": "string"
+            },
+            "email": {
+              "description": "Author email",
+              "type": "string"
+            },
+            "link": {
+              "description": "Author website",
+              "type": "string"
+            }
+          }
+        },
+        "creator": {
+          "description": "Creator",
+          "type": "string"
+        },
+        "copyright": {
+          "description": "copyright",
+          "type": "string"
+        },
+        "time": {
+          "description": "UTC date associated with this entity",
+          "type": "string",
+          "format": "full-date"
+        },
+        "keywords": {
+          "description": "keywords csv",
+          "type": "string"
+        },
+        "bounds": {
+          "description": "Tags for the product",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
+    "trk": {
+      "type": "object",
+      "items": { "$ref": "#/$defs/trk" }
+    }
+  },
+  "$defs": {
+    "trk": {
+      "type": "object",
+      "required": [ "trkseg" ],
+      "properties": {
+        "trkseg": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "$ref": "#/$defs/trkseg" },
+              { "$ref": "#/$defs/trkbr" }
+            ]
+          }
+        }
+      }
+    },
+    "trkseg": {
+      "type": "object",
+      "required": [ "start", "lat", "lon", "times" ],
+      "properties": {
+        "start": {
+          "description": "UTC date of first point in sequence",
+          "type": "string",
+          "format": "full-date"
+        },
+        "lat": {
+          "description": "Decoded latitudes sequence",
+          "type": "string"
+        },
+        "lon": {
+          "description": "Decoded longitudes sequence",
+          "type": "string"
+        },
+        "times": {
+          "description": "Decoded times (offsets from start) sequence",
+          "type": "string"
+        },
+
+        "name": {
+          "description": "Name of track segment",
+          "type": "string"
+        },
+        "desc": {
+          "description": "Description of track segment",
+          "type": "string"
+        },
+        "cmt": {
+          "description": "Comment for track segment",
+          "type": "string"
+        },
+        "alt": {
+          "description": "Decoded altitudes sequence",
+          "type": "string"
+        },
+        "hr":  {
+          "description": "Decoded heart rate sequence",
+          "type": "string"
+        },
+        "temp":  {
+          "description": "Decoded temperature sequence",
+          "type": "string"
+        }
+      }
+    },
+    "trkbr": {
+      "type": "object",
+      "required": [ "start", "finish" ],
+      "properties": {
+        "start": {
+          "description": "UTC date of first point in sequence",
+          "type": "string",
+          "format": "full-date"
+        },
+        "finish": {
+          "description": "UTC date of first point in sequence",
+          "type": "string",
+          "format": "full-date"
+        },
+        "name": {
+          "description": "Name of track segment",
+          "type": "string"
+        },
+        "desc": {
+          "description": "Description of track segment",
+          "type": "string"
+        },
+        "cmt": {
+          "description": "Comment for track segment",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

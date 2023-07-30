@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outFile": "./lib/xneek-gpx.js",
+    "moduleResolution": "nodenext"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "src/xneek-gpx.ts"
+  ]
+}
