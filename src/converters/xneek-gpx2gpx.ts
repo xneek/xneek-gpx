@@ -67,7 +67,7 @@ export const xneekGpxToGPX = (xneekGPXObj?: IXneekGpx): string => {
                 })
             },
             "__version": "1.1",
-            "__creator": "xneek-gpx",
+            "__creator": xneekGPXObj.metadata.creator ?? "xneek-gpx",
             "__xmlns": "http://www.topografix.com/GPX/1/1",
             "__xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
             "__xmlns:gte": "http://www.gpstrackeditor.com/xmlschemas/General/1",
