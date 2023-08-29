@@ -65,7 +65,7 @@ $ yarn add xneek-gpx
 ### Running the tests
 
 ```sh
-$ npm test
+$ npm run test
 ```
 
 ### Building a distribution version
