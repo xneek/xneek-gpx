@@ -1,9 +1,9 @@
 
-function round(value) {
+function round(value:number) {
   return Math.floor(Math.abs(value) + 0.5) * (value >= 0 ? 1 : -1);
 }
 
-function encode(_current, _previous, factor) {
+function encode(_current: number, _previous: number, factor: number) {
   const current = round(_current * factor);
   const previous = round(_previous * factor);
   let coordinate = current - previous;
@@ -20,7 +20,7 @@ function encode(_current, _previous, factor) {
   return output;
 }
 
-const encodeNumbersSequence = (numbersSequence: number[]) => {
+export const encodeNumbersSequence = (numbersSequence: number[]) => {
 const precision = 5;
   const factor = 10 ** precision;
   let output = encode(numbersSequence[0], 0, factor);
@@ -34,7 +34,7 @@ const precision = 5;
   return output;
 };
 
-export const decodeNumbersSequence = encodedNumbersSequenceStr => {
+export const decodeNumbersSequence = (encodedNumbersSequenceStr: string) => {
   const numbers = [];
   let index = 0;
   let num = 0;
@@ -68,5 +68,3 @@ export const decodeNumbersSequence = encodedNumbersSequenceStr => {
   }
   return numbers;
 };
-
-module.exports = { encodeNumbersSequence, decodeNumbersSequence };
