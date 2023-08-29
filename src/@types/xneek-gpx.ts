@@ -1,4 +1,4 @@
-interface IXneekGpxMetadata {
+export interface IXneekGpxMetadata {
     name?: string;
     desc?: string;
     author?: {
@@ -19,7 +19,7 @@ interface IXneekGpxMetadata {
     creatorVersion?: string;
 }
 
-interface IXneekTrackSegment {
+export interface IXneekTrackSegment {
     kind: 'segment',
     start: string;
     lat: string;
@@ -34,7 +34,7 @@ interface IXneekTrackSegment {
     temp?: string;
 }
 
-interface IXneekTrackBreak {
+export interface IXneekTrackBreak {
     kind: 'break',
     start: string;
     finish: string;
@@ -44,7 +44,7 @@ interface IXneekTrackBreak {
     desc?: string;
 }
 
-interface IXneekTrack {
+export interface IXneekTrack {
     trkseg:  Array<IXneekTrackSegment | IXneekTrackBreak>
     name?: string
 }
