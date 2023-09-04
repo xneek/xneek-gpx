@@ -1,8 +1,29 @@
 import {IXneekGpx, IXneekTrackSegment} from "../@types/xneek-gpx";
 import {encodeNumbersSequence} from "../xneek-gpx";
-import {IParsedGPX} from "../@types/gpx";
+import {IParsedGPX, IParsedGPXTrkPt} from "../@types/gpx";
+import {
+    maxPossibleAtemp,
+    maxPossibleEle,
+    maxPossibleHr,
+    minPossibleAtemp,
+    minPossibleEle,
+    minPossibleHr, skipAtemp,
+    skipEle,
+    skipHr
+} from "./constants";
 const { XMLParser } = require("fast-xml-parser");
 
+
+const getFromExtension = (point: IParsedGPXTrkPt, namespace: 'gpxtpx' | 'ns3', key: 'hr' | 'atemp'): number | undefined => {
+    const ext = point?.extensions?.[`${namespace}:TrackPointExtension`] as IParsedGPXTrkPt['extensions'];
+    if (point?.extensions?.[`gpxtpx:TrackPointExtension`]) {
+        return point?.extensions[`gpxtpx:TrackPointExtension`]?.[`gpxtpx:${key}`]
+    }
+
+    if (point?.extensions?.[`ns3:TrackPointExtension`]) {
+        return point?.extensions[`ns3:TrackPointExtension`]?.[`ns3:${key}`]
+    }
+}
 
 export const gpxStringToXneekGpx = (gpxString?: string): IXneekGpx => {
 
@@ -19,9 +40,9 @@ export const gpxStringToXneekGpx = (gpxString?: string): IXneekGpx => {
 
     const metadata: Partial<IXneekGpx['metadata']> = {};
 
-    if (jObj.gpx.metadata.name) { metadata.name = jObj.gpx.metadata.name; }
-    if (jObj.gpx.metadata.time) { metadata.time = jObj.gpx.metadata.time; }
-    if (jObj.gpx.creator) { metadata.creator = jObj.gpx.creator; }
+    if (jObj.gpx?.metadata?.name) { metadata.name = jObj.gpx.metadata.name; }
+    if (jObj.gpx?.metadata?.time) { metadata.time = jObj.gpx.metadata.time; }
+    if (jObj.gpx?.creator) { metadata.creator = jObj.gpx.creator; }
 
     return {
         metadata,
@@ -48,14 +69,29 @@ export const gpxStringToXneekGpx = (gpxString?: string): IXneekGpx => {
                 };
 
                 if (trkpt.some(({ele}) => !!ele)) {
-                    p.ele = encodeNumbersSequence(trkpt.map(({ele}) => +ele ?? 0));
-                }
-                if (trkpt.some((point) => point?.extensions?.['gpxtpx:TrackPointExtension']?.['gpxtpx:hr'])) {
-                    p.hr = encodeNumbersSequence(trkpt.map((point) => +point?.extensions?.['gpxtpx:TrackPointExtension']?.['gpxtpx:hr'] ?? 0));
+                    p.ele = encodeNumbersSequence(trkpt.map(({ele}) => ele >= minPossibleEle && ele <= maxPossibleEle ? ele : skipEle));
                 }
 
-                if (trkpt.some((point) => point?.extensions?.['gpxtpx:TrackPointExtension']?.['gpxtpx:atemp'])) {
-                    p.temp = encodeNumbersSequence(trkpt.map((point) => +point?.extensions?.['gpxtpx:TrackPointExtension']?.['gpxtpx:atemp'] ?? -270));
+
+                if (trkpt.some((point) => {
+                    return getFromExtension(point, 'gpxtpx', 'hr')
+                        || getFromExtension(point, 'ns3', 'hr')
+                })) {
+                    p.hr = encodeNumbersSequence(trkpt.map((point) =>{
+                        const hr = getFromExtension(point, 'gpxtpx', 'hr') ??
+                            getFromExtension(point, 'ns3', 'hr');
+                        return hr >= minPossibleHr && hr <= maxPossibleHr ? hr : skipHr
+                    }));
+                }
+
+
+                if (trkpt.some((point) => getFromExtension(point, 'gpxtpx', 'atemp') || getFromExtension(point, 'ns3', 'atemp'))) {
+
+                    p.temp = encodeNumbersSequence(trkpt.map((point) => {
+                        const atemp = getFromExtension(point, 'gpxtpx', 'atemp') ??
+                            getFromExtension(point, 'ns3', 'atemp');
+                        return atemp > minPossibleAtemp && atemp <= maxPossibleAtemp ? atemp : skipAtemp;
+                    }));
                 }
 
                 return p;

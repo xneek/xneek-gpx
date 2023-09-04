@@ -1,5 +1,13 @@
 import {IXneekGpx, IXneekTrackSegment} from "../@types/xneek-gpx";
 import {decodeNumbersSequence} from "../xneek-gpx";
+import {
+    maxPossibleAtemp,
+    maxPossibleEle,
+    maxPossibleHr,
+    minPossibleAtemp,
+    minPossibleEle,
+    minPossibleHr
+} from "./constants";
 const { XMLBuilder } = require("fast-xml-parser");
 
 export const xneekGpxToGPX = (xneekGPXObj?: IXneekGpx): string => {
@@ -42,18 +50,18 @@ export const xneekGpxToGPX = (xneekGPXObj?: IXneekGpx): string => {
 
                             const additional: any = {};
 
-                            if (ele[i]) {
+                            if (ele[i] && ele[i] >= minPossibleEle && ele[i] <= maxPossibleEle) {
                                 additional.ele = ele[i]
                             }
 
-                            if (hr[i]) {
-                                if (!additional.extensions) { additional.extensions = { 'gpxtpx:TrackPointExtension': {} } }
-                                additional.extensions['gpxtpx:TrackPointExtension']['gpxtpx:hr'] = hr[i];
+                            if (hr[i] && hr[i] >= minPossibleHr && hr[i] <= maxPossibleHr) {
+                                if (!additional.extensions) { additional.extensions = { 'ns3:TrackPointExtension': {} } }
+                                additional.extensions['ns3:TrackPointExtension']['ns3:hr'] = hr[i];
                             }
 
-                            if (temp[i] && temp[i] !== -270) {
-                                if (!additional.extensions) { additional.extensions = { 'gpxtpx:TrackPointExtension': {} } }
-                                additional.extensions['gpxtpx:TrackPointExtension']['gpxtpx:atemp'] = temp[i];
+                            if (temp[i] && temp[i] >= minPossibleAtemp && temp[i] <= maxPossibleAtemp) {
+                                if (!additional.extensions) { additional.extensions = { 'ns3:TrackPointExtension': {} } }
+                                additional.extensions['ns3:TrackPointExtension']['ns3:atemp'] = temp[i];
                             }
 
                             return {
@@ -66,16 +74,13 @@ export const xneekGpxToGPX = (xneekGPXObj?: IXneekGpx): string => {
                     }
                 })
             },
-            "__version": "1.1",
             "__creator": xneekGPXObj.metadata.creator ?? "xneek-gpx",
+            "__version": "1.1",
+            "__xsi:schemaLocation": "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/11.xsd",
+            "__xmlns:ns3": "http://www.garmin.com/xmlschemas/TrackPointExtension/v1",
             "__xmlns": "http://www.topografix.com/GPX/1/1",
             "__xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-            "__xmlns:gte": "http://www.gpstrackeditor.com/xmlschemas/General/1",
-            "__xmlns:gpxtpx": "http://www.garmin.com/xmlschemas/TrackPointExtension/v1",
-            "__xmlns:gpxx": "http://www.garmin.com/xmlschemas/GpxExtensions/v3",
-            "__targetNamespace": "http://www.topografix.com/GPX/1/1",
-            "__elementFormDefault": "qualified",
-            "__xsi:schemaLocation": "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
+            "xmlns:ns2": "http://www.garmin.com/xmlschemas/GpxExtensions/v3",
         }
     };
 

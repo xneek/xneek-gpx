@@ -7,6 +7,10 @@ export interface IParsedGPXTrkPt {
         'gpxtpx:TrackPointExtension'?: {
             'gpxtpx:hr'?: number;
             'gpxtpx:atemp'?: number;
+        },
+        'ns3:TrackPointExtension'?: {
+            'ns3:hr'?: number;
+            'ns3:atemp'?: number;
         }
     }
 }
