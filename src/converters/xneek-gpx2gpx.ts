@@ -39,6 +39,8 @@ export const xneekGpxToGPX = (xneekGPXObj?: IXneekGpx): string => {
                     const lat = decodeNumbersSequence(trkseg.lat);
                     const lon = decodeNumbersSequence(trkseg.lon);
 
+                    console.log(lat.join('_'))
+
                     const ele = trkseg.ele ? decodeNumbersSequence(trkseg.ele) : [];
                     const hr = trkseg.hr ? decodeNumbersSequence(trkseg.hr) : [];
                     const temp = trkseg.temp ? decodeNumbersSequence(trkseg.temp) : [];
