@@ -80,7 +80,7 @@ export const xneekGpxToGPX = (xneekGPXObj?: IXneekGpx): string => {
             "__xmlns:ns3": "http://www.garmin.com/xmlschemas/TrackPointExtension/v1",
             "__xmlns": "http://www.topografix.com/GPX/1/1",
             "__xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-            "xmlns:ns2": "http://www.garmin.com/xmlschemas/GpxExtensions/v3",
+            "__xmlns:ns2": "http://www.garmin.com/xmlschemas/GpxExtensions/v3",
         }
     };
 

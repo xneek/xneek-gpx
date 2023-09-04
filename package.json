@@ -9,7 +9,14 @@
     "minify": "uglifyjs-folder lib --compress --source-map --mangle -eo lib/min"
   },
   "repository": "git@github.com:xneek/xneek-gpx.git",
-  "keywords": ["gps","gpx","track","compress","decode","encode"],
+  "keywords": [
+    "gps",
+    "gpx",
+    "track",
+    "compress",
+    "decode",
+    "encode"
+  ],
   "author": "xneek <xneek@mail.ru>",
   "license": "MIT",
   "devDependencies": {
@@ -17,16 +24,16 @@
     "@babel/parser": "^7.22.7",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-typescript": "^7.22.5",
+    "@babel/types": "^7.22.5",
     "@jest/globals": "^29.6.1",
     "@types/jest": "^29.5.3",
     "babel-jest": "^29.6.1",
+    "fast-xml-parser": "^4.2.7",
     "jest": "^29.6.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
     "uglify-js": "^3.17.4",
-    "uglifyjs-folder": "^3.3.0",
-    "@babel/types": "^7.22.5",
-    "fast-xml-parser": "^4.2.7"
+    "uglifyjs-folder": "^3.3.0"
   },
   "bin": {
     "xneek2gpx": "bin/xneek2gpx.js",
@@ -38,5 +45,8 @@
   "types": "./lib/xneek-gpx.d.ts",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
+  },
+  "dependencies": {
+    "lz-string": "^1.5.0"
   }
 }

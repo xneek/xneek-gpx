@@ -15,7 +15,6 @@ const { XMLParser } = require("fast-xml-parser");
 
 
 const getFromExtension = (point: IParsedGPXTrkPt, namespace: 'gpxtpx' | 'ns3', key: 'hr' | 'atemp'): number | undefined => {
-    const ext = point?.extensions?.[`${namespace}:TrackPointExtension`] as IParsedGPXTrkPt['extensions'];
     if (point?.extensions?.[`gpxtpx:TrackPointExtension`]) {
         return point?.extensions[`gpxtpx:TrackPointExtension`]?.[`gpxtpx:${key}`]
     }
@@ -35,8 +34,6 @@ export const gpxStringToXneekGpx = (gpxString?: string): IXneekGpx => {
         }
     });
     let jObj: IParsedGPX = parser.parse(gpxString);
-
-    //return (JSON.stringify(jObj, null, '  '));
 
     const metadata: Partial<IXneekGpx['metadata']> = {};
 
@@ -85,7 +82,10 @@ export const gpxStringToXneekGpx = (gpxString?: string): IXneekGpx => {
                 }
 
 
-                if (trkpt.some((point) => getFromExtension(point, 'gpxtpx', 'atemp') || getFromExtension(point, 'ns3', 'atemp'))) {
+                if (trkpt.some((point) => {
+                    return getFromExtension(point, 'gpxtpx', 'atemp')
+                        || getFromExtension(point, 'ns3', 'atemp')
+                })) {
 
                     p.temp = encodeNumbersSequence(trkpt.map((point) => {
                         const atemp = getFromExtension(point, 'gpxtpx', 'atemp') ??

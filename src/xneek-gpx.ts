@@ -1,3 +1,4 @@
+import {compressToBase64 as compress, decompressFromBase64 as decompress} from 'lz-string'
 
 function round(value:number) {
   return Math.floor(Math.abs(value) + 0.5) * (value >= 0 ? 1 : -1);
@@ -20,7 +21,7 @@ function encode(_current: number, _previous: number, factor: number) {
   return output;
 }
 
-export const encodeNumbersSequence = (numbersSequence: number[]) => {
+export const encodeNumbersSequence = (numbersSequence: number[]): string => {
 const precision = 5;
   const factor = 10 ** precision;
   let output = encode(numbersSequence[0], 0, factor);
@@ -31,13 +32,15 @@ const precision = 5;
     output += encode(a, b, factor);;
   }
 
-  return output;
+  return compress(output);
 };
 
-export const decodeNumbersSequence = (encodedNumbersSequenceStr: string) => {
+export const decodeNumbersSequence = (encodedNumbersSequenceStrArg: string) => {
   const numbers = [];
   let index = 0;
   let num = 0;
+
+  const encodedNumbersSequenceStr = decompress(encodedNumbersSequenceStrArg);
 
   while (index < encodedNumbersSequenceStr.length) {
     let b;
