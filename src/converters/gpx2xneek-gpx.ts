@@ -12,6 +12,7 @@ import {
     skipHr
 } from "./constants";
 const { XMLParser } = require("fast-xml-parser");
+const pjson = require('../../package.json');
 
 
 const getFromExtension = (point: IParsedGPXTrkPt, namespace: 'gpxtpx' | 'ns3', key: 'hr' | 'atemp'): number | undefined => {
@@ -40,6 +41,7 @@ export const gpxStringToXneekGpx = (gpxString?: string): IXneekGpx => {
     if (jObj.gpx?.metadata?.name) { metadata.name = jObj.gpx.metadata.name; }
     if (jObj.gpx?.metadata?.time) { metadata.time = jObj.gpx.metadata.time; }
     if (jObj.gpx?.creator) { metadata.creator = jObj.gpx.creator; }
+    metadata.xneekGpx = pjson.version;
 
     return {
         metadata,

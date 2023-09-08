@@ -17,6 +17,7 @@ export interface IXneekGpxMetadata {
     keywords?: string;
     bounds?: Array<[number, number]>
     creatorVersion?: string;
+    xneekGpx?: string;
 }
 
 export interface IXneekTrackSegment {
