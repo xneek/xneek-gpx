@@ -4,9 +4,9 @@
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "outDir": "./lib/",
     "resolveJsonModule": true
   },
@@ -16,8 +16,5 @@
   ],
   "include": [
     "src/**/*"
-  ],
-  "files": [
-    "src/@types/gpx.ts"
   ]
 }
